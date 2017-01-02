@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--[if IE 7 ]><body class="ie ie7"><![endif]-->
+<!--[if IE 8 ]><body class="ie ie8"><![endif]-->
+<!--[if IE 9 ]><body class="ie ie9"><![endif]-->
+<html class='no-js' lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>CitiBank</title>
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&subset=vietnamese" rel="stylesheet">
+    <link type="image/x-icon" href="{{ url_for('static', filename='images/fav.png')}}" rel="shortcut icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+
+</head>
+
+<body>
+
+    <section style="padding:20px;">
+        <div class="row">
+                <div class="col-sm-12 col-md-12 media-wr fadeOutBigLeft" style="text-align:center;">
+                    <h1>Tool support Logchang, Tách file thành các file Approved, Rejected, Hold và Update Amount</h1>
+                </div>
+        </div>
+        <div class="row">
+            <form class='reg-now-visible' id='formIndex' action="/" method="post" accept-charset="utf-8" role="form" enctype="multipart/form-data">
+                <div class="col-sm-12 col-md-2">
+                </div>
+                <div class="col-sm-12 col-md-4 media-wr fadeOutBigLeft">
+                    <p class="title-form mb-10">File logchange</p>
+                    <div class='control-group'>
+                        <input type="file" name="datafile" id="datafile" value="" required oninvalid="setCustomValidity('File logchange là bắt buộc')">
+                    </div>
+
+                    <p class="title-form mb-10">Tên folder</p>
+                    <div class='control-group'>
+                        <input type="text" name="folder_logchange" value="{{form.data.folder_logchange|safe}}" required oninvalid="setCustomValidity('Tên folder là bắt buộc')">
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 media-wr fadeOutBigLeft">
+                    <p class="title-form mb-10">Ngày logchange</p>
+                    <div class='control-group'>
+                        <input type="text" name="day_logchange" value="{{form.data.day_logchange|safe}}" required oninvalid="setCustomValidity('Ngày logchange là bắt buộc')">
+                    </div>
+                    <button type="submit" value="Register Now" class='btn submit sub-form' name="submit">Log change ngay</button>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                </div>
+            </form>
+        </div>
+        <div class="clr"></div>
+        <br>
+        {% if quantity_Approved>0 %}
+        <div class="row">
+             <div class="col-sm-12 col-md-12">
+                 <h2>Thông tin Approved</h2>
+                 <p>Link download: <a href="{{PARTH_LOCHANGE}}/{{folder_logchange}}/Approved.csv">Download</a></p>
+                 <p>Số bản ghi: {{ data_Approved|length }}</p>
+                 <p>quantities: {{quantity_Approved|safe}}</p>
+                 <p>Tổng tiền: {{total_amount_Approved|safe}}</p>
+                 <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
+                     <table  class="table table-bordered">
+                          <tr role="row" class="odd">
+                              <th class="sorting_1" width="5%" align="center">
+                                  #
+                              </th>
+                                {% for item in first_Title %}
+                                <th>
+                                    {{item|safe}}
+                                </th>
+                                {% endfor %}
+                            </tr>
+
+                        {% for item in data_Approved %}
+                            <tr role="row" class="odd">
+                              <td class="sorting_1" width="5%" align="center">
+                                  {{loop.index}}
+                              </td>
+                                {% for item1 in item %}
+                                <td>
+                                    {{item1|safe}}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                         {% endfor %}
+
+                     </table>
+                 </div>
+             </div>
+         </div>
+        <div class="clr"></div>
+        {% endif %}
+
+
+        {% if quantity_UpdateAmount>0 %}
+        <div class="row">
+             <div class="col-sm-12 col-md-12">
+                 <h2>Thông tin UpdateAmount</h2>
+                 <p>Link download: <a href="{{PARTH_LOCHANGE}}/{{folder_logchange}}/Hold.csv">Download</a></p>
+                 <p>Số bản ghi: {{ data_UpdateAmount|length }}</p>
+                 <p>quantities: {{quantity_UpdateAmount|safe}}</p>
+                 <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
+                     <table  class="table table-bordered">
+                          <tr role="row" class="odd">
+                              <th class="sorting_1" width="5%" align="center">
+                                  #
+                              </th>
+                                {% for item in updateamount_Title %}
+                                <th>
+                                    {{item|safe}}
+                                </th>
+                                {% endfor %}
+                            </tr>
+
+                        {% for item in data_UpdateAmount %}
+                            <tr role="row" class="odd">
+                              <td class="sorting_1" width="5%" align="center">
+                                  {{loop.index}}
+                              </td>
+                                {% for item1 in item %}
+                                <td>
+                                    {{item1|safe}}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                         {% endfor %}
+                     </table>
+                 </div>
+             </div>
+         </div>
+        <div class="clr"></div>
+        {% endif %}
+
+
+        {% if quantity_Hold>0 %}
+        <div class="row">
+             <div class="col-sm-12 col-md-12">
+                 <h2>Thông tin Hold</h2>
+                 <p>Link download: <a href="{{PARTH_LOCHANGE}}/{{folder_logchange}}/Hold.csv">Download</a></p>
+                 <p>Số bản ghi: {{ data_Hold|length }}</p>
+                 <p>quantities: {{quantity_Hold|safe}}</p>
+                 <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
+                     <table  class="table table-bordered">
+                          <tr role="row" class="odd">
+                              <th class="sorting_1" width="5%" align="center">
+                                  #
+                              </th>
+                                {% for item in first_Title %}
+                                <th>
+                                    {{item|safe}}
+                                </th>
+                                {% endfor %}
+                            </tr>
+
+                        {% for item in data_Hold %}
+                            <tr role="row" class="odd">
+                              <td class="sorting_1" width="5%" align="center">
+                                  {{loop.index}}
+                              </td>
+                                {% for item1 in item %}
+                                <td>
+                                    {{item1|safe}}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                         {% endfor %}
+                     </table>
+                 </div>
+             </div>
+         </div>
+        <div class="clr"></div>
+        {% endif %}
+
+       {% if quantity_Rejected>0 %}
+        <div class="row">
+             <div class="col-sm-12 col-md-12">
+                 <h2>Thông tin Rejected</h2>
+                 <p>Link download: <a href="{{PARTH_LOCHANGE}}/{{folder_logchange}}/Rejected.csv">Download</a></p>
+                 <p>Số bản ghi: {{ data_Rejected|length }}</p>
+                 <p>quantities: {{quantity_Rejected|safe}}</p>
+                 <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
+                     <table  class="table table-bordered">
+                          <tr role="row" class="odd">
+                              <th class="sorting_1" width="5%" align="center">
+                                  #
+                              </th>
+                                {% for item in first_Title %}
+                                <th>
+                                    {{item|safe}}
+                                </th>
+                                {% endfor %}
+                            </tr>
+
+                        {% for item in data_Rejected %}
+                            <tr role="row" class="odd">
+                              <td class="sorting_1" width="5%" align="center">
+                                  {{loop.index}}
+                              </td>
+                                {% for item1 in item %}
+                                <td>
+                                    {{item1|safe}}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                         {% endfor %}
+                     </table>
+                 </div>
+             </div>
+         </div>
+        <div class="clr"></div>
+        {% endif %}
+
+
+
+        </section>
+
+
+    <div class="mask"></div>
+    <script src="{{ url_for('static', filename='js/jquery-1.10.1.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.bxslider.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.customSelect.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.validate.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.colorbox-min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/loader.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/tracking.js')}}" ></script>
+    <script>
+        jQuery(document).ready(function(){
+            jQuery("#datafile").change(function(){
+                var FileUploadPath = jQuery(this).val();
+                var Extension = FileUploadPath.substring(FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+                if(Extension!="xlsx"){
+                    jQuery(this).val('');
+                    alert('Không đúng định dạng file .xlsx');
+                }
+            });
+        });
+
+
+
+    </script>
+</body>
+
+</html>
