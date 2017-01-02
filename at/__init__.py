@@ -31,10 +31,14 @@ def static_from_root():
 def index():
 
     form = BankForm()
+
     PARTH_LOCHANGE = "/media/mebao/DATA1"
+    if not os.path.exists('/media/mebao'):
+        PARTH_LOCHANGE="/opt/landingpages/logchange/at/statics"
 
     if not form.day_logchange.data:
-        form.day_logchange.data = "30/11/2016"
+        form.day_logchange.data = datetime.datetime.now().strftime("%d/%m/%Y")
+
 
     if not form.folder_logchange.data:
         form.folder_logchange.data = "logcha"
