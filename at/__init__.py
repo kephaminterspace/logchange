@@ -32,7 +32,7 @@ def index():
 
     form = BankForm()
 
-    PARTH_LOCHANGE = "/media/mebao/DATA1"
+    PARTH_LOCHANGE = "/media/mebao/DATA_UBUNTU/LAND_PAGE/LOG_CHANGE/logchange/at/statics"
     if not os.path.exists('/media/mebao'):
         PARTH_LOCHANGE="/opt/landingpages/logchange/at/statics"
 
@@ -41,7 +41,7 @@ def index():
 
 
     if not form.folder_logchange.data:
-        form.folder_logchange.data = "logcha"
+        form.folder_logchange.data = "logchange"
 
     total_amount_Approved = 0
     quantity_Approved = 0
@@ -117,11 +117,12 @@ def index():
                     total_amount_Approved = total_amount_Approved + float(row[5].value)
                     data_Approved.append(item)
 
-                    if row[20].value != '' and row[20].value != '-':
-                        item = [row[0].value,"","","","", row[20].value,"","","","","","","","","","","","Approved"]
-                        writer_UpdateAmount.writerow(item)
-                        quantity_UpdateAmount = quantity_UpdateAmount + int(row[4].value)
-                        data_UpdateAmount.append(item)
+                    if len(row)>20:
+                        if row[20].value != '' and row[20].value != '-':
+                            item = [row[0].value,"","","","", row[20].value,"","","","","","","","","","","","Approved"]
+                            writer_UpdateAmount.writerow(item)
+                            quantity_UpdateAmount = quantity_UpdateAmount + int(row[4].value)
+                            data_UpdateAmount.append(item)
 
                 if row[17].value.lower() == "hold":
                     item = [row[0].value, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
