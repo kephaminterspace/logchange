@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
-
 </head>
 
 <body>
@@ -64,6 +63,7 @@
                  <p>Số bản ghi: {{ data_Approved|length }}</p>
                  <p>quantities: {{quantity_Approved|safe}}</p>
                  <p>Tổng tiền: {{total_amount_Approved|safe}}</p>
+
                  <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
                      <table  class="table table-bordered">
                           <tr role="row" class="odd">
@@ -84,7 +84,9 @@
                               </td>
                                 {% for item1 in item %}
                                 <td>
-                                    {{item1|safe}}
+                                    {% if item1 %}
+                                        {{item1|safe}}
+                                    {% endif %}
                                 </td>
                                 {% endfor %}
                             </tr>
@@ -105,6 +107,7 @@
                  <p>Link download: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/UpdateAmount.csv">Download</a></p>
                  <p>Số bản ghi: {{ data_UpdateAmount|length }}</p>
                  <p>quantities: {{quantity_UpdateAmount|safe}}</p>
+
                  <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
                      <table  class="table table-bordered">
                           <tr role="row" class="odd">
@@ -125,7 +128,9 @@
                               </td>
                                 {% for item1 in item %}
                                 <td>
-                                    {{item1|safe}}
+                                    {% if item1 %}
+                                        {{item1|safe}}
+                                    {% endif %}
                                 </td>
                                 {% endfor %}
                             </tr>
@@ -145,6 +150,7 @@
                  <p>Link download: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/Hold.csv">Download</a></p>
                  <p>Số bản ghi: {{ data_Hold|length }}</p>
                  <p>quantities: {{quantity_Hold|safe}}</p>
+
                  <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
                      <table  class="table table-bordered">
                           <tr role="row" class="odd">
@@ -165,7 +171,9 @@
                               </td>
                                 {% for item1 in item %}
                                 <td>
-                                    {{item1|safe}}
+                                    {% if item1 %}
+                                        {{item1|safe}}
+                                    {% endif %}
                                 </td>
                                 {% endfor %}
                             </tr>
@@ -184,6 +192,7 @@
                  <p>Link download: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/Rejected.csv">Download</a></p>
                  <p>Số bản ghi: {{ data_Rejected|length }}</p>
                  <p>quantities: {{quantity_Rejected|safe}}</p>
+
                  <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
                      <table  class="table table-bordered">
                           <tr role="row" class="odd">
@@ -204,7 +213,9 @@
                               </td>
                                 {% for item1 in item %}
                                 <td>
-                                    {{item1|safe}}
+                                    {% if item1 %}
+                                        {{item1|safe}}
+                                    {% endif %}
                                 </td>
                                 {% endfor %}
                             </tr>
@@ -215,8 +226,6 @@
          </div>
         <div class="clr"></div>
         {% endif %}
-
-
 
         </section>
 
