@@ -29,7 +29,6 @@ def static_from_root():
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
-
     form = BankForm()
 
     PARTH_LOCHANGE = "/media/mebao/DATA_UBUNTU/LAND_PAGE/LOG_CHANGE/logchange/at/statics"
@@ -112,35 +111,36 @@ def index():
 
             sheet = sheets[0]
             for row in sheet.iter_rows():
-                if row[17].value.lower() == "approved" or row[17].value.lower() == "approve":
-                    item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None,
-                            None, None, None, None, None, "Approved"]
-                    writer_Approved.writerow(item)
-                    quantity_Approved = quantity_Approved + int(row[4].value)
-                    total_amount_Approved = total_amount_Approved + float(row[5].value)
-                    data_Approved.append(item)
+                if row[0].value != None and row[0].value !='':
+                    if row[17].value.lower() == "approved" or row[17].value.lower() == "approve":
+                        item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None,
+                                None, None, None, None, None, "Approved"]
+                        writer_Approved.writerow(item)
+                        quantity_Approved = quantity_Approved + int(row[4].value)
+                        total_amount_Approved = total_amount_Approved + float(row[5].value)
+                        data_Approved.append(item)
 
-                    if len(row)>20:
-                        if row[20].value != '' and row[20].value != '-':
-                            item = [row[0].value, None, None, None, None, row[20].value, None, None, None, None, None,
-                                    None, None, None, None, None, None, "Approved"]
-                            writer_UpdateAmount.writerow(item)
-                            quantity_UpdateAmount = quantity_UpdateAmount + int(row[4].value)
-                            data_UpdateAmount.append(item)
+                        if len(row)>20:
+                            if row[20].value != '' and row[20].value != '-':
+                                item = [row[0].value, None, None, None, None, round(float(row[20].value),1), None, None, None, None, None,
+                                        None, None, None, None, None, None, "Approved"]
+                                writer_UpdateAmount.writerow(item)
+                                quantity_UpdateAmount = quantity_UpdateAmount + int(row[4].value)
+                                data_UpdateAmount.append(item)
 
-                if row[17].value.lower() == "hold":
-                    item = [row[0].value, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                            None, None, None, "Hold"]
-                    writer_Hold.writerow(item)
-                    quantity_Hold = quantity_Hold + int(row[4].value)
-                    data_Hold.append(item)
+                    if row[17].value.lower() == "hold":
+                        item = [row[0].value, None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                None, None, None, "Hold"]
+                        writer_Hold.writerow(item)
+                        quantity_Hold = quantity_Hold + int(row[4].value)
+                        data_Hold.append(item)
 
-                if row[17].value.lower() == "reject" or row[17].value.lower() == "rejecte" or row[17].value.lower() == "rejected":
-                    item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None,
-                            None, None, None, None, None, "Rejected"]
-                    writer_Rejected.writerow(item)
-                    quantity_Rejected = quantity_Rejected + int(row[4].value)
-                    data_Rejected.append(item)
+                    if row[17].value.lower() == "reject" or row[17].value.lower() == "rejecte" or row[17].value.lower() == "rejected":
+                        item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None,
+                                None, None, None, None, None, "Rejected"]
+                        writer_Rejected.writerow(item)
+                        quantity_Rejected = quantity_Rejected + int(row[4].value)
+                        data_Rejected.append(item)
 
             Approved.close()
             Hold.close()
