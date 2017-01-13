@@ -55,15 +55,13 @@
         </div>
         <div class="clr"></div>
         <br>
+
         {% if quantity_Approved>0 %}
         <div class="row">
-             <div class="col-sm-12 col-md-12">
-                 <h2>Thông tin Approved</h2>
-                 <p>Link download: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/Approved.csv">Download</a></p>
-                 <p>Số bản ghi: {{ data_Approved|length }}</p>
-                 <p>quantities: {{quantity_Approved|safe}}</p>
-                 <p>Tổng tiền: {{total_amount_Approved|safe}}</p>
-
+            <div class="col-sm-12 col-md-12">
+                 <p>Link download file MassApproved: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/MassApproved.csv">Download</a></p>
+                  <p>Số bản ghi: {{ data_Approved|length }}</p>
+                <br>
                  <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
                      <table  class="table table-bordered">
                           <tr role="row" class="odd">
@@ -94,7 +92,7 @@
 
                      </table>
                  </div>
-             </div>
+            </div>
          </div>
         <div class="clr"></div>
         {% endif %}
@@ -143,43 +141,23 @@
         {% endif %}
 
 
+               {% if quantity_Approved>0 %}
+        <div class="row">
+             <div class="col-sm-12 col-md-12">
+                 <h2>Thông tin Approved</h2>
+                 <p>quantities: {{quantity_Approved|safe}}</p>
+                 <p>Tổng tiền: {{total_amount_Approved|safe}}</p>
+             </div>
+         </div>
+        <div class="clr"></div>
+        {% endif %}
+
+
         {% if quantity_Hold>0 %}
         <div class="row">
              <div class="col-sm-12 col-md-12">
                  <h2>Thông tin Hold</h2>
-                 <p>Link download: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/Hold.csv">Download</a></p>
-                 <p>Số bản ghi: {{ data_Hold|length }}</p>
                  <p>quantities: {{quantity_Hold|safe}}</p>
-
-                 <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
-                     <table  class="table table-bordered">
-                          <tr role="row" class="odd">
-                              <th class="sorting_1" width="5%" align="center">
-                                  #
-                              </th>
-                                {% for item in first_Title %}
-                                <th>
-                                    {{item|safe}}
-                                </th>
-                                {% endfor %}
-                            </tr>
-
-                        {% for item in data_Hold %}
-                            <tr role="row" class="odd">
-                              <td class="sorting_1" width="5%" align="center">
-                                  {{loop.index}}
-                              </td>
-                                {% for item1 in item %}
-                                <td>
-                                    {% if item1 %}
-                                        {{item1|safe}}
-                                    {% endif %}
-                                </td>
-                                {% endfor %}
-                            </tr>
-                         {% endfor %}
-                     </table>
-                 </div>
              </div>
          </div>
         <div class="clr"></div>
@@ -189,39 +167,7 @@
         <div class="row">
              <div class="col-sm-12 col-md-12">
                  <h2>Thông tin Rejected</h2>
-                 <p>Link download: <a href="{{ url_for('static', filename='')}}{{folder_logchange}}/Rejected.csv">Download</a></p>
-                 <p>Số bản ghi: {{ data_Rejected|length }}</p>
                  <p>quantities: {{quantity_Rejected|safe}}</p>
-
-                 <div class="table-responsive" style="height: 250px; width: 100%;overflow-x: scroll;overflow-y: scroll;">
-                     <table  class="table table-bordered">
-                          <tr role="row" class="odd">
-                              <th class="sorting_1" width="5%" align="center">
-                                  #
-                              </th>
-                                {% for item in first_Title %}
-                                <th>
-                                    {{item|safe}}
-                                </th>
-                                {% endfor %}
-                            </tr>
-
-                        {% for item in data_Rejected %}
-                            <tr role="row" class="odd">
-                              <td class="sorting_1" width="5%" align="center">
-                                  {{loop.index}}
-                              </td>
-                                {% for item1 in item %}
-                                <td>
-                                    {% if item1 %}
-                                        {{item1|safe}}
-                                    {% endif %}
-                                </td>
-                                {% endfor %}
-                            </tr>
-                         {% endfor %}
-                     </table>
-                 </div>
              </div>
          </div>
         <div class="clr"></div>

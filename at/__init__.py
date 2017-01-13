@@ -39,7 +39,7 @@ def index():
         today = datetime.date.today()
         first = today.replace(day=1)
         lastMonth = first - datetime.timedelta(days=1)
-        form.day_logchange.data = "30/"+lastMonth.strftime("%m/%Y")
+        form.day_logchange.data = lastMonth.strftime("%d/%m/%Y")
 
     if not form.folder_logchange.data:
         form.folder_logchange.data = "logchange"
@@ -74,9 +74,7 @@ def index():
         day_logchange = form.day_logchange.data
         folder_logchange = form.folder_logchange.data
 
-        parth_File_Approved = PARTH_LOCHANGE + '/' + folder_logchange+'/Approved.csv'
-        parth_File_Hold = PARTH_LOCHANGE + '/' + folder_logchange + '/Hold.csv'
-        parth_File_Rejected = PARTH_LOCHANGE + '/' + folder_logchange + '/Rejected.csv'
+        parth_File_Approved = PARTH_LOCHANGE + '/' + folder_logchange+'/MassApproved.csv'
         parth_File_UpdateAmount = PARTH_LOCHANGE + '/' + folder_logchange + '/UpdateAmount.csv'
 
         if len(sheets) > 0:
@@ -88,15 +86,6 @@ def index():
             Approved = open(parth_File_Approved, "wb")
             writer_Approved = csv.writer(Approved, delimiter=',', quoting=csv.QUOTE_ALL)
 
-            if not os.path.exists(parth_File_Hold):
-                os.mknod(parth_File_Hold)
-            Hold = open(parth_File_Hold, "wb")
-            writer_Hold = csv.writer(Hold, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-
-            if not os.path.exists(parth_File_Rejected):
-                os.mknod(parth_File_Rejected)
-            Rejected = open(parth_File_Rejected, "wb")
-            writer_Rejected = csv.writer(Rejected, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
 
             if not os.path.exists(parth_File_UpdateAmount):
                 os.mknod(parth_File_UpdateAmount)
@@ -104,47 +93,41 @@ def index():
             writer_UpdateAmount = csv.writer(UpdateAmount, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
 
             writer_Approved.writerow(first_Title)
-            writer_Hold.writerow(first_Title)
-            writer_Rejected.writerow(first_Title)
-
             writer_UpdateAmount.writerow(updateamount_Title)
 
             sheet = sheets[0]
             for row in sheet.iter_rows():
                 if row[0].value != None and row[0].value !='':
+                    item = None
                     if row[17].value.lower() == "approved" or row[17].value.lower() == "approve":
                         item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None,
                                 None, None, None, None, None, "Approved"]
-                        writer_Approved.writerow(item)
                         quantity_Approved = quantity_Approved + int(row[4].value)
                         total_amount_Approved = total_amount_Approved + float(row[5].value)
-                        data_Approved.append(item)
-
                         if len(row)>20:
-                            if row[20].value != '' and row[20].value != '-':
-                                item = [row[0].value, None, None, None, None, round(float(row[20].value),1), None, None, None, None, None,
+                            if row[20].value != '' and row[20].value != '-' and row[20].value != None and row[20].value != 0:
+                                item1 = [row[0].value, None, None, None, None, round(float(row[20].value),1), None, None, None, None, day_logchange,
                                         None, None, None, None, None, None, "Approved"]
-                                writer_UpdateAmount.writerow(item)
+                                writer_UpdateAmount.writerow(item1)
                                 quantity_UpdateAmount = quantity_UpdateAmount + int(row[4].value)
-                                data_UpdateAmount.append(item)
+                                data_UpdateAmount.append(item1)
 
-                    if row[17].value.lower() == "hold":
-                        item = [row[0].value, None, None, None, None, None, None, None, None, None, None, None, None, None,
+                    if row[17].value.lower() == "hold" or row[17].value.lower() == "New":
+                        item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None, None, None,
                                 None, None, None, "Hold"]
-                        writer_Hold.writerow(item)
                         quantity_Hold = quantity_Hold + int(row[4].value)
-                        data_Hold.append(item)
+
 
                     if row[17].value.lower() == "reject" or row[17].value.lower() == "rejecte" or row[17].value.lower() == "rejected":
                         item = [row[0].value, None, None, None, None, None, None, None, None, None, day_logchange, None,
                                 None, None, None, None, None, "Rejected"]
-                        writer_Rejected.writerow(item)
                         quantity_Rejected = quantity_Rejected + int(row[4].value)
-                        data_Rejected.append(item)
+
+                    if item:
+                        writer_Approved.writerow(item)
+                        data_Approved.append(item)
 
             Approved.close()
-            Hold.close()
-            Rejected.close()
             UpdateAmount.close()
 
     return render_template('index.html',
@@ -162,7 +145,5 @@ def index():
                            quantity_UpdateAmount=quantity_UpdateAmount,
 
                            data_Approved=data_Approved,
-                           data_Hold=data_Hold,
-                           data_Rejected=data_Rejected,
                            data_UpdateAmount=data_UpdateAmount
                            )
