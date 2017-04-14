@@ -106,7 +106,7 @@ def index():
                         total_amount_Approved = total_amount_Approved + float(row[5].value)
                         if len(row)>20:
                             if row[20].value != '' and row[20].value != '-' and row[20].value != None and row[20].value != 0:
-                                item1 = [row[0].value, None, None, None, None, round(float(row[20].value),1), None, None, None, None, day_logchange,
+                                item1 = [row[0].value, None, None, None, None, round(float(row[20].value),2), None, None, None, None, day_logchange,
                                         None, None, None, None, None, None, "Approved"]
                                 writer_UpdateAmount.writerow(item1)
                                 quantity_UpdateAmount = quantity_UpdateAmount + int(row[4].value)
